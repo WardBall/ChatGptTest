@@ -86,6 +86,9 @@
             <p style="font-size: small; text-align: center;" id="firstP">
 
             </p>
+            <p style="font-size: small;" id="info">
+
+            </p>
         </div>
     </div>
 </body>
@@ -125,7 +128,7 @@
                 beforeSend: function(XMLHttpRequest) { 
                 },
                 headers: {
-                    "Authorization": "Bearer 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",
+                    "Authorization": "Bearer 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",
                     "model": "text-davinci-003"
                 },
                 data: JSON.stringify({
@@ -149,8 +152,8 @@
                             }
                         }
                     }
-                    $("#firstP").text("翻译内容如下：")
-                    $(".tr").append('<p style="font-size: small;" >'+info+'</p>')
+                    $("#firstP").text("翻译内容如下：") 
+                    $("#info").text(info)
 
                 },
                 error: function(msg) {
