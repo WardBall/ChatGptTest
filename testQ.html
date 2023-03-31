@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        #tr{
+            width: auto;
+            border: black;
+        }
+        .bodydiv{ 
+            background-color: black;
+            width: 70%;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 20px;
+        }
+        .chackdiv{
+            background-color: aqua;
+            width: 50%;
+            height: auto;
+            border-radius: 20px;
+            margin: 0 auto;
+            padding-left: 10%;
+        }
+        #inputtext{
+            max-width: 100%;
+            min-width: 100%; 
+            border-radius: 5px;
+            background-color: rgb(238, 238, 238);
+        }
+        .textarea{
+            background-color: yellow;
+            width: 50%;
+            height: 50%; 
+            margin: auto;
+        }
+    </style>
+    <body>
+
+        <div class="bodydiv">
+            <div>
+                <div class="chackdiv">
+                    <button type="button">确认</button>
+                    <select id="trname">
+                        <option value="Simplified Chinese">
+                            中文
+                        </option>
+                        <option value="English">
+                            英文
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="textarea">
+                <textarea id="inputtext" cols="30" rows="10"></textarea>
+            </div>
+
+
+            <div name="tr">
+                <p>
+
+                </p>
+            </div>
+        </div>
+    </body>
+
+
+    <script>  
+
+
+    
+    
+    function run(){
+        var gitinfo = $("#inputtext").val();
+/*         var trinfo = $("#trinfor").val();     */
+/*         var trgid = "zh-Hans"; */
+var trgid = $("#trname").val();
+/*         var Improverprompt = "I want you to act as an  translator, spelling corrector and improver. I will speak to you in any language and you will detect the language, translate it and answer in the corrected and improved version of my text, in English. I want you to replace my simplified A0-level words and sentences with more beautiful and elegant, upper level English words and sentences. Keep the meaning same, but make them more literary. I want you to only reply the correction, the improvements and nothing else, do not write explanations. "
+        var askinfo = Improverprompt+'\n\n' +'please translate to '+trgid+':' + gitinfo; */
+        var askinfo = 'I want you to act as an  translator please translate to '+trgid+':' + gitinfo;
+        click(askinfo);
+
+       }
+
+    function click(askinfo){
+ 
+             console.log(askinfo);
+            if(askinfo != null ){
+                $.ajax({
+            url:"https://api.openai.com/v1/completions",
+            type:"post", 
+            dataType:"JSON",
+            contentType:"application/json", 
+            beforeSend:function(XMLHttpRequest){
+                $("p").text("正在加载中,稍微有点慢，耐心等待");
+            },
+            headers:{
+                "Authorization":"Bearer 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", 
+                 "model": "text-davinci-003"
+            },
+            data:JSON.stringify ({
+                "model": "text-davinci-003",
+                "prompt": askinfo,
+                "max_tokens": 2048
+            }),
+            success:function(data){     
+                var info;
+                console.log(data)
+                for(var z in data){ 
+                    
+                    if(z == 'choices'){
+                        
+                        var obj = data[z][0];
+                        //var textinfo = obj[0];  
+                        for(var i in obj){
+                            if(i == "text"){
+                                info = obj[i];
+                            }
+                        }
+                    }
+                }  
+    
+                $("p").text(info);
+    
+            },error:function(msg){ 
+                $("p").text("连接错误"+msg.status);
+                console.log("连接错误");
+            }
+           }
+           );
+    
+            }
+        
+    
+       }
+    
+          
+
+       $(document).ready(function(){
+        $("button").click(function(){
+            run();
+
+        });
+    });
+        </script>
+</html>
