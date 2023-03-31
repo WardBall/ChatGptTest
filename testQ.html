@@ -1,148 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <style>
-        #tr{
-            width: auto;
-            border: black;
-        }
-        .bodydiv{ 
-            background-color: black;
-            width: 70%;
-            height: auto;
-            margin: 0 auto;
-            border-radius: 20px;
-        }
-        .chackdiv{
-            background-color: aqua;
-            width: 50%;
-            height: auto;
-            border-radius: 20px;
-            margin: 0 auto;
-            padding-left: 10%;
-        }
-        #inputtext{
-            max-width: 100%;
-            min-width: 100%; 
-            border-radius: 5px;
-            background-color: rgb(238, 238, 238);
-        }
-        .textarea{
-            background-color: yellow;
-            width: 50%;
-            height: 50%; 
-            margin: auto;
-        }
-    </style>
-    <body>
 
-        <div class="bodydiv">
-            <div>
-                <div class="chackdiv">
-                    <button type="button">确认</button>
-                    <select id="trname">
-                        <option value="Simplified Chinese">
-                            中文
-                        </option>
-                        <option value="English">
-                            英文
-                        </option>
-                    </select>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<style>
+    #tr {
+        border: 5px;
+        width: auto;
+        border: black;
+    }
 
-            </div>
+    .bodydiv {
+        border: 1px solid black;
+        width: 50%;
+        height: auto;
+        margin: auto;
+        border-radius: 20px;
+    }
 
-            <div class="textarea">
-                <textarea id="inputtext" cols="30" rows="10"></textarea>
-            </div>
+    .chackdiv {
+        border: 1px solid black;
+        width: 50%;
+        height: auto;
+        border-radius: 10px;
+        margin: 10px auto;
+        text-align: center;
+    }
 
+    #inputtext {
+        width: 100%;
+        height: 200px;
+        resize: none;
+        border-radius: 5px;
+        background-color: rgba(230, 224, 224, 0.815);
 
-            <div name="tr">
-                <p>
+    }
 
-                </p>
-            </div>
+    .textarea {
+        width: 70%;
+        height: 200px;
+        margin: auto;
+        margin-top: 10px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: small;
+    }
+
+    .tr {
+        border: 1px solid black;
+        width: 70%;
+        min-height: 100px;
+        margin: auto;
+        border-radius: 5px;
+    }
+</style>
+
+<body>
+
+    <div class="bodydiv">
+        <h1>
+            ChatGpt翻译
+        </h1>
+        <div class="textarea">
+            <textarea id="inputtext"></textarea>
         </div>
-    </body>
+        <div class="chackdiv">
+            <button type="button">确认</button>
+            <select id="trname">
+                <option value="Simplified Chinese">
+                    中文
+                </option>
+                <option value="English">
+                    英文
+                </option>
+            </select>
+        </div>
+        <div class="tr">
+            <p style="font-size: small; text-align: center;" id="firstP">
+
+            </p>
+        </div>
+    </div>
+</body>
 
 
-    <script>  
+<script>
+    /*    function testP(){  
+        var a = '“文章”的“章”字，是个会意字，从音从十。古代奏音乐，连奏十段才能结束（十，数之终也），这十段乐就是一章。所以，文章文章，也有段落。文章既从“音乐”里会意出来，应是用文字表达出来的东西，读起来如音乐一样美妙无穷、悦耳动听的文字，传诵开来，才配得上“文章”一词的真正含义。释义“文”即“纹”，指“纹路”、“纹样”。“章”本指“屏蔽”，转指“外表”。“文章”原义指“有纹样的表面”，诸如服装上绣绘的龙凤图样、皮肤上针刺的花卉图案，等等。即其原义是指直接构成视觉形象的图样。后指文字所描绘出来的事物图样，需要大脑“解码”才能完整呈现的间接的事物形象'
+        var items ={};
+        for (let index = 0; index < 10; index++) {  
+            items[index] = a;
+            $(".tr").append('<p style="font-size: small;">'+items[index]+'<p/>');
+        }
+        
+    } */
 
 
-    
-    
-    function run(){
+
+    function run() {
         var gitinfo = $("#inputtext").val();
-var trgid = $("#trname").val();
-/*         var Improverprompt = "I want you to act as an  translator, spelling corrector and improver. I will speak to you in any language and you will detect the language, translate it and answer in the corrected and improved version of my text, in English. I want you to replace my simplified A0-level words and sentences with more beautiful and elegant, upper level English words and sentences. Keep the meaning same, but make them more literary. I want you to only reply the correction, the improvements and nothing else, do not write explanations. "
-        var askinfo = Improverprompt+'\n\n' +'please translate to '+trgid+':' + gitinfo; */
-        var askinfo = 'I want you to act as an  translator please translate to '+trgid+':' + gitinfo;
+        var trgid = $("#trname").val();
+        $("#firstP").text("正在翻译中...");
+        var askinfo = 'I want you to act as an  translator please translate to ' + trgid + ':' + gitinfo;
         click(askinfo);
 
-       }
+    }
 
-    function click(askinfo){
- 
-             console.log(askinfo);
-            if(askinfo != null ){
-                $.ajax({
-            url:"https://api.openai.com/v1/completions",
-            type:"post", 
-            dataType:"JSON",
-            contentType:"application/json", 
-            beforeSend:function(XMLHttpRequest){
-                $("p").text("正在加载中,稍微有点慢，耐心等待");
-            },
-            headers:{
-                "Authorization":"Bearer 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", 
-                 "model": "text-davinci-003"
-            },
-            data:JSON.stringify ({
-                "model": "text-davinci-003",
-                "prompt": askinfo,
-                "max_tokens": 2048
-            }),
-            success:function(data){     
-                var info;
-                console.log(data)
-                for(var z in data){ 
-                    
-                    if(z == 'choices'){
-                        
-                        var obj = data[z][0];
-                        //var textinfo = obj[0];  
-                        for(var i in obj){
-                            if(i == "text"){
-                                info = obj[i];
+    function click(askinfo) {
+
+        console.log(askinfo);
+        if (askinfo != null) {
+            $.ajax({
+                url: "https://api.openai.com/v1/completions",
+                type: "post",
+                dataType: "JSON",
+                contentType: "application/json",
+                beforeSend: function(XMLHttpRequest) { 
+                },
+                headers: {
+                    "Authorization": "Bearer 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",
+                    "model": "text-davinci-003"
+                },
+                data: JSON.stringify({
+                    "model": "text-davinci-003",
+                    "prompt": askinfo,
+                    "max_tokens": 2048
+                }),
+                success: function(data) {
+                    var info;
+                    console.log(data)
+                    for (var z in data) {
+
+                        if (z == 'choices') {
+
+                            var obj = data[z][0];
+                            //var textinfo = obj[0];  
+                            for (var i in obj) {
+                                if (i == "text") {
+                                    info = obj[i];
+                                }
                             }
                         }
                     }
-                }  
-    
-                $("p").text(info);
-    
-            },error:function(msg){ 
-                $("p").text("连接错误"+msg.status);
-                console.log("连接错误");
-            }
-           }
-           );
-    
-            }
-        
-    
-       }
-    
-          
+                    $("#firstP").text("翻译内容如下：")
+                    $(".tr").append('<p style="font-size: small;" >'+info+'</p>')
 
+                },
+                error: function(msg) {
+                    $("p").text("连接错误" + msg.status); 
+                }
+            });
+
+        }
+
+
+    }
+
+    function checkInfoIsOk() {
+        var status = Blob;
+        if ($("#inputtext") != null) {
+            return status = true;
+        } else {
+            return status = false;
+        }
+    }
+
+    $(document).ready(function() {
+        $("button").click(function() {
+            var status = checkInfoIsOk();
+            if (status != false) {
+                run();
+            } else {
+                $("p").text("输入可不能为空，不然不知道翻译什么！");
+            }
 
         });
     });
-        </script>
+</script>
+
 </html>
